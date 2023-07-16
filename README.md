@@ -20,4 +20,18 @@ sequenceDiagram
     AWS -->>- Dev: results
 ```
 
+# Bonus
 
+I'm by no means an expert in Terraform, but my initial research points me to the implementation of [Sentinel Policies](https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement/sentinel).
+Also found some [Sentinel Policies for AWS](https://github.com/hashicorp/terraform-guides/tree/master/governance/first-generation/aws)
+
+My guess is that running Terraform will look like this:
+
+```mermaid
+flowchart TD
+    A[plan] -->|1| B[Sentinel]
+    B --> |2. get IAM role arns| C(list of allowed IAM roles) --> B
+    B ---> |3| D{check user's IAM role}
+    D --> |4a. valid IAM  role| E[apply]
+    D --> |4b. invalid IAM  role| F[end]
+```
